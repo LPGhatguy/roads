@@ -1,0 +1,6 @@
+name = "Roads"
+author = "LPGhatguy"
+version = "0.0.0"
+
+[dependencies]
+Roact = { git = "https://github.com/Roblox/roact", rev = "new-reconciler" }

@@ -1,0 +1,8 @@
+lockfile_format_version = 0
+
+[[package]]
+name = 'Roact'
+type = 'git'
+source = 'https://github.com/Roblox/roact'
+commit = 'c70a45715c687dfa5d445459506c239e68b3344b'
+rev = 'new-reconciler'

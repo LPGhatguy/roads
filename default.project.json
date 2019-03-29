@@ -1,0 +1,89 @@
+{
+  "name": "roads",
+  "tree": {
+    "$className": "DataModel",
+    "HttpService": {
+      "$className": "HttpService",
+      "$properties": {
+        "HttpEnabled": true
+      }
+    },
+    "Lighting": {
+      "$className": "Lighting",
+      "$properties": {
+        "Ambient": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Outlines": false,
+        "GlobalShadows": true,
+        "Technology": "Voxel",
+        "Brightness": 2.0
+      }
+    },
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Common": {
+        "$path": "src/common"
+      },
+      "Packages": {
+        "$path": "packages"
+      },
+      "Models": {
+        "$path": "models"
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Server": {
+        "$path": "src/server"
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+
+        "Client": {
+          "$path": "src/client"
+        }
+      }
+    },
+    "SoundService": {
+      "$className": "SoundService",
+      "$properties": {
+        "RespectFilteringEnabled": true
+      }
+    },
+    "Workspace": {
+      "$className": "Workspace",
+      "$properties": {
+        "FilteringEnabled": true
+      },
+      "Baseplate": {
+        "$className": "Part",
+        "$properties": {
+          "Locked": true,
+          "Anchored": true,
+          "Size": [
+            512.0,
+            20.0,
+            512.0
+          ],
+          "Color": [
+            0.38823,
+            0.37254,
+            0.38823
+          ],
+          "Position": [
+            0.0,
+            -10.0,
+            0.0
+          ]
+        }
+      }
+    }
+  }
+}
