@@ -9,4 +9,4 @@ script:
   - echo "TODO, run tests"
 
 after_success:
-  - rojo upload --cookie "$ROBLOSECURITY" --place_id 3016686255
+  - rojo upload --cookie "$ROBLOSECURITY" --asset_id 3016686255
