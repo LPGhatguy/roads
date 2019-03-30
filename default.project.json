@@ -11,15 +11,12 @@
     "Lighting": {
       "$className": "Lighting",
       "$properties": {
-        "Ambient": [
-          0.0,
-          0.0,
-          0.0
-        ],
+        "Ambient": [0, 0, 0],
+        "OutdoorAmbient": [0, 0, 0],
         "Outlines": false,
         "GlobalShadows": true,
         "Technology": "Voxel",
-        "Brightness": 2.0
+        "Brightness": 1.0
       }
     },
     "ReplicatedStorage": {
