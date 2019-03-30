@@ -24,9 +24,6 @@
       "Common": {
         "$path": "src/common"
       },
-      "Packages": {
-        "$path": "packages"
-      },
       "Models": {
         "$path": "models"
       }
