@@ -7,12 +7,9 @@ local modelStorage = ReplicatedStorage.Models
 local Models = require(Common.Models)
 local Map = require(Common.Map)
 
-print("new server")
-
 -- Hack to work around ref serialization not working in Rojo right now
 for _, model in ipairs(modelStorage:GetChildren()) do
 	model.PrimaryPart = model:FindFirstChild("Floor")
-	print(model.PrimaryPart)
 end
 
 Models.createManifest()

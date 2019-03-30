@@ -46,6 +46,10 @@
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
 
+        "PlayerScriptsLoader": {
+          "$className": "LocalScript"
+        },
+
         "Client": {
           "$path": "src/client"
         }
