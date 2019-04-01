@@ -1,4 +1,6 @@
 # Road Not Taken
+![Travis CI Build Status](https://api.travis-ci.org/LPGhatguy/roads.svg?branch=master)
+
 [Roblox Group](https://www.roblox.com/groups/4828125/Road-Not-Taken#!/about)
 
 Early work in progress technology demonstration for building a Roblox game entirely with Rojo. It's not a game yet.
