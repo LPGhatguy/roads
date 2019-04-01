@@ -1,63 +1,64 @@
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
 local UserInputService = game:GetService("UserInputService")
-local Workspace = game:GetService("Workspace")
 
-local localPlayer = Players.LocalPlayer
-local keysDown = {}
+local Log = require(script.Log)
+
+Log.info("Client initializing...")
+
+local Common = ReplicatedFirst.Common
+
+local ClientApi = require(script.ClientApi)
+local ClientGameSession = require(script.ClientGameSession)
+
+local Models = require(Common.Models)
+
+Models.waitUntilLoaded()
+
+local gameSession
+
+local client
+client = ClientApi.connect({
+	gameSessionStarted = function(initialGameState)
+		gameSession = ClientGameSession.new(initialGameState)
+		gameSession:stepSystems()
+	end,
+	gameMutations = function(mutations)
+		if gameSession == nil then
+			Log.warn("No game session active.")
+			return
+		end
+
+		gameSession:processMutations(mutations)
+		gameSession:stepSystems()
+	end,
+})
 
 UserInputService.InputBegan:Connect(function(inputObject)
-	if inputObject.UserInputType == Enum.UserInputType.Keyboard then
-		keysDown[inputObject.KeyCode] = true
-	end
-end)
-
-UserInputService.InputEnded:Connect(function(inputObject)
-	if inputObject.UserInputType == Enum.UserInputType.Keyboard then
-		keysDown[inputObject.KeyCode] = false
-	end
-end)
-
-RunService.Stepped:Connect(function()
-	local camera = Workspace.CurrentCamera
-
-	if camera == nil then
-		warn("Skipping frame, camera is nil")
+	if gameSession == nil then
 		return
 	end
 
-	local character = localPlayer.Character
+	local input
 
-	if character == nil then
-		warn("Skipping update, character is nil")
-		return
+	if inputObject.UserInputType == Enum.UserInputType.Keyboard then
+		if inputObject.KeyCode == Enum.KeyCode.Space then
+			input = { type = "wait" }
+		elseif inputObject.KeyCode == Enum.KeyCode.W then
+			input = { type = "move", x = 0, y = 1 }
+		elseif inputObject.KeyCode == Enum.KeyCode.S then
+			input = { type = "move", x = 0, y = -1 }
+		elseif inputObject.KeyCode == Enum.KeyCode.A then
+			input = { type = "move", x = 1, y = 0 }
+		elseif inputObject.KeyCode == Enum.KeyCode.D then
+			input = { type = "move", x = -1, y = 0 }
+		end
 	end
 
-	local humanoid = character.Humanoid
-	local rootPart = humanoid.RootPart
-
-	camera.CFrame = CFrame.new(
-		Vector3.new(rootPart.Position.X, 30, rootPart.Position.Z - 15),
-		Vector3.new(rootPart.Position.X, 2, rootPart.Position.Z)
-	)
-
-	local moveDirection = Vector3.new()
-
-	if keysDown[Enum.KeyCode.W] then
-		moveDirection = moveDirection + Vector3.new(0, 0, 1)
+	if input ~= nil then
+		client:gameInput(input)
 	end
-
-	if keysDown[Enum.KeyCode.S] then
-		moveDirection = moveDirection - Vector3.new(0, 0, 1)
-	end
-
-	if keysDown[Enum.KeyCode.A] then
-		moveDirection = moveDirection + Vector3.new(1, 0, 0)
-	end
-
-	if keysDown[Enum.KeyCode.D] then
-		moveDirection = moveDirection - Vector3.new(1, 0, 0)
-	end
-
-	humanoid:Move(moveDirection, false)
 end)
+
+client:startGameSession()
+
+Log.info("Client initialized.")

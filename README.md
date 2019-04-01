@@ -14,6 +14,7 @@ This project intends to show off the latest and greatest in Rojo features. It cu
 
 ## Bugs found so far
 - Refs don't serialize correctly, which makes `Model.PrimaryPart` not work. ([LPGhatguy/rojo#142](https://github.com/LPGhatguy/rojo/issues/142))
+- Property type inference for `Content` values doesn't happen, and the error messages Rojo outputs when inference fails are bad.
 
 ## License
 *Road Not Taken* is available under the terms of the MIT license. See [LICENSE.txt](LICENSE.txt) for details.

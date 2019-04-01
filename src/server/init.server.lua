@@ -1,30 +1,59 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
-local Common = ReplicatedStorage.Common
-local modelStorage = ReplicatedStorage.Models
+local Log = require(script.Log)
+
+Log.info("Server initializing...")
+
+local Common = ReplicatedFirst.Common
+
+local ServerGameSession = require(script.ServerGameSession)
+local ServerGameState = require(script.ServerGameState)
+local ServerApi = require(script.ServerApi)
 
 local Models = require(Common.Models)
-local Map = require(Common.Map)
 
--- Hack to work around ref serialization not working in Rojo right now
-for _, model in ipairs(modelStorage:GetChildren()) do
-	model.PrimaryPart = model:FindFirstChild("Floor")
-end
-
+Models.WORKAROUND_fixPrimaryPart()
 Models.createManifest()
 
-local map = Map.newEmpty(32, 32)
+local gameSessionsByPlayer = {}
 
-for x = 1, 5 do
-	for y = 1, 5 do
-		map:setTile(x, y, true)
-	end
-end
+local server
+server = ServerApi.create({
+	startGameSession = function(player)
+		if gameSessionsByPlayer[player] ~= nil then
+			Log.warn("Player %s already had a game session.", player.Name)
+			return
+		end
 
-for y = 6, 10 do
-	map:setTile(3, y, true)
-end
+		local gameSession = ServerGameSession.new(player)
+		gameSessionsByPlayer[player] = gameSession
 
-local instance = map:construct()
-instance.Parent = Workspace
+		server:gameSessionStarted(player, ServerGameState.viewAsClient(gameSession.state))
+	end,
+	gameInput = function(player, input)
+		local gameSession = gameSessionsByPlayer[player]
+
+		if gameSession == nil then
+			Log.warn("Player %s does not have an active game session.", player.Name)
+			return
+		end
+
+		local mutations = gameSession:processInput(input)
+
+		Log.trace("Sending %d mutations to client", #mutations)
+		server:gameMutations(player, mutations)
+	end,
+})
+
+Players.PlayerAdded:Connect(function(player)
+	Log.info("Player added: %s", player.Name)
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	Log.info("Player removing: %s", player.Name)
+
+	gameSessionsByPlayer[player] = nil
+end)
+
+Log.info("Server initialized.")

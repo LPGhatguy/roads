@@ -17,13 +17,25 @@
         "GlobalShadows": true,
         "Technology": "Voxel",
         "Brightness": 1.0
+      },
+      "Skybox": {
+        "$path": "Skybox.rbxmx"
+      }
+    },
+    "ReplicatedFirst": {
+      "$className": "ReplicatedFirst",
+      "Common": {
+        "$path": "src/common"
+      },
+      "Modules": {
+        "$className": "Folder",
+        "t": {
+          "$path": "modules/t/lib/t.lua"
+        }
       }
     },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "Common": {
-        "$path": "src/common"
-      },
       "Models": {
         "$path": "models"
       }
@@ -47,6 +59,12 @@
         "Client": {
           "$path": "src/client"
         }
+      }
+    },
+    "Players": {
+      "$className": "Players",
+      "$properties": {
+        "CharacterAutoLoads": false
       }
     },
     "SoundService": {
