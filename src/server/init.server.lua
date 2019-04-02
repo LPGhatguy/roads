@@ -8,7 +8,6 @@ Log.info("Server initializing...")
 local Common = ReplicatedStorage.Common
 
 local ServerGameSession = require(script.ServerGameSession)
-local ServerGameState = require(script.ServerGameState)
 local ServerApi = require(script.ServerApi)
 
 local Models = require(Common.Models)
@@ -29,7 +28,7 @@ server = ServerApi.create({
 		local gameSession = ServerGameSession.new(player)
 		gameSessionsByPlayer[player] = gameSession
 
-		server:gameSessionStarted(player, ServerGameState.viewAsClient(gameSession.state))
+		server:gameSessionStarted(player, gameSession.store:getState())
 	end,
 	gameInput = function(player, input)
 		local gameSession = gameSessionsByPlayer[player]
@@ -39,10 +38,10 @@ server = ServerApi.create({
 			return
 		end
 
-		local mutations = gameSession:processInput(input)
+		local actions = gameSession:processInput(input)
 
-		Log.trace("Sending %d mutations to client", #mutations)
-		server:gameMutations(player, mutations)
+		Log.trace("Sending %d actions to client", #actions)
+		server:gameActions(player, actions)
 	end,
 })
 

@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local t = require(ReplicatedStorage.Modules.t)
 
-local Mutation = require(script.Parent.Mutation)
+local Action = require(script.Parent.Action)
 local validateInput = require(script.Parent.validateInput)
 
 local function args(...)
@@ -48,9 +48,9 @@ return {
 				{"initialGameState", t.table}
 			),
 		},
-		gameMutations = {
+		gameActions = {
 			arguments = args(
-				{"mutations", t.array(Mutation.validate)}
+				{"actions", t.array(Action.validate)}
 			),
 		},
 	},

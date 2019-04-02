@@ -22,13 +22,13 @@ client = ClientApi.connect({
 		gameSession = ClientGameSession.new(initialGameState)
 		gameSession:stepSystems()
 	end,
-	gameMutations = function(mutations)
+	gameActions = function(actions)
 		if gameSession == nil then
 			Log.warn("No game session active.")
 			return
 		end
 
-		gameSession:processMutations(mutations)
+		gameSession:processActions(actions)
 		gameSession:stepSystems()
 	end,
 })
