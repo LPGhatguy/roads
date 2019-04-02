@@ -22,8 +22,11 @@
         "$path": "Skybox.rbxmx"
       }
     },
-    "ReplicatedFirst": {
-      "$className": "ReplicatedFirst",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Models": {
+        "$path": "models"
+      },
       "Common": {
         "$path": "src/common"
       },
@@ -35,12 +38,6 @@
         "Roact": {
           "$path": "modules/roact/lib"
         }
-      }
-    },
-    "ReplicatedStorage": {
-      "$className": "ReplicatedStorage",
-      "Models": {
-        "$path": "models"
       }
     },
     "ServerScriptService": {

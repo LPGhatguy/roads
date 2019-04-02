@@ -1,8 +1,8 @@
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Log = require(script.Parent.Log)
 
-local t = require(ReplicatedFirst.Modules.t)
+local t = require(ReplicatedStorage.Modules.t)
 
 local Mutation = {}
 

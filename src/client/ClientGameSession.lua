@@ -1,8 +1,8 @@
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local Systems = ReplicatedFirst.Common.Systems
+local Systems = ReplicatedStorage.Common.Systems
 
-local Mutation = require(ReplicatedFirst.Common.Mutation)
+local Mutation = require(ReplicatedStorage.Common.Mutation)
 local moveCamera = require(Systems.moveCamera)
 local renderGame = require(Systems.renderGame)
 local renderCharacters = require(Systems.renderCharacters)

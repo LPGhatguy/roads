@@ -1,11 +1,11 @@
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 
 local Log = require(script.Log)
 
 Log.info("Client initializing...")
 
-local Common = ReplicatedFirst.Common
+local Common = ReplicatedStorage.Common
 
 local ClientApi = require(script.ClientApi)
 local ClientGameSession = require(script.ClientGameSession)

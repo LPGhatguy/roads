@@ -10,12 +10,11 @@
 	systems.
 ]]
 
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Log = require(script.Parent.Log)
 
-local ApiSpec = require(ReplicatedFirst.Common.ApiSpec)
+local ApiSpec = require(ReplicatedStorage.Common.ApiSpec)
 
 local ClientApi = {}
 

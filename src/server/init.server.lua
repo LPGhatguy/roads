@@ -1,11 +1,11 @@
 local Players = game:GetService("Players")
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Log = require(script.Log)
 
 Log.info("Server initializing...")
 
-local Common = ReplicatedFirst.Common
+local Common = ReplicatedStorage.Common
 
 local ServerGameSession = require(script.ServerGameSession)
 local ServerGameState = require(script.ServerGameState)

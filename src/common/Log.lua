@@ -1,5 +1,5 @@
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local createLogger = require(ReplicatedFirst.Common.createLogger)
+local createLogger = require(ReplicatedStorage.Common.createLogger)
 
 return createLogger("common")

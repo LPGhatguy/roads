@@ -1,6 +1,6 @@
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local t = require(ReplicatedFirst.Modules.t)
+local t = require(ReplicatedStorage.Modules.t)
 
 local Mutation = require(script.Parent.Mutation)
 local validateInput = require(script.Parent.validateInput)

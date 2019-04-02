@@ -1,6 +1,6 @@
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local MapLayer = require(ReplicatedFirst.Common.MapLayer)
+local MapLayer = require(ReplicatedStorage.Common.MapLayer)
 
 local ServerGameState = {}
 

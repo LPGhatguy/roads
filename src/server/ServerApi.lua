@@ -1,9 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
 
 local Log = require(script.Parent.Log)
 
-local ApiSpec = require(ReplicatedFirst.Common.ApiSpec)
+local ApiSpec = require(ReplicatedStorage.Common.ApiSpec)
 
 local ServerApi = {}
 

@@ -1,6 +1,6 @@
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local Common = ReplicatedFirst.Common
+local Common = ReplicatedStorage.Common
 local Systems = Common.Systems
 
 local playerMovement = require(Systems.playerMovement)

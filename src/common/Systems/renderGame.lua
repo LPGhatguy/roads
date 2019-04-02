@@ -1,7 +1,7 @@
 local Workspace = game:GetService("Workspace")
-local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local Common = ReplicatedFirst.Common
+local Common = ReplicatedStorage.Common
 
 local MapLayer = require(Common.MapLayer)
 local World = require(Common.World)
