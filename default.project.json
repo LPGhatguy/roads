@@ -37,6 +37,9 @@
         },
         "Roact": {
           "$path": "modules/roact/lib"
+        },
+        "Rodux": {
+          "$path": "modules/rodux/lib"
         }
       }
     },
