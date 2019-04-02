@@ -1,14 +1,14 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Common = ReplicatedStorage.Common
-local Systems = Common.Systems
+local Components = Common.Components
 
 local Rodux = require(ReplicatedStorage.Modules.Rodux)
 
 local Reducer = require(Common.Reducer)
-local moveCamera = require(Systems.moveCamera)
-local renderGame = require(Systems.renderGame)
-local renderCharacters = require(Systems.renderCharacters)
+local moveCamera = require(Components.moveCamera)
+local renderGame = require(Components.renderGame)
+local renderCharacters = require(Components.renderCharacters)
 
 local Log = require(script.Parent.Log)
 
@@ -20,7 +20,7 @@ function ClientGameSession.new(initialGameState)
 
 	return setmetatable({
 		store = Rodux.Store.new(Reducer, initialGameState),
-		systems = {
+		components = {
 			moveCamera(),
 			renderGame(),
 			renderCharacters(),
@@ -28,9 +28,9 @@ function ClientGameSession.new(initialGameState)
 	}, ClientGameSession)
 end
 
-function ClientGameSession:stepSystems()
-	for _, system in ipairs(self.systems) do
-		system(self.store:getState())
+function ClientGameSession:stepComponents()
+	for _, component in ipairs(self.components) do
+		component(self.store:getState())
 	end
 end
 
