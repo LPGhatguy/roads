@@ -1,14 +1,14 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Common = ReplicatedStorage.Common
-local Components = Common.Components
+local NotReallyComponents = Common.NotReallyComponents
 
 local Rodux = require(ReplicatedStorage.Modules.Rodux)
 
 local Reducer = require(Common.Reducer)
-local moveCamera = require(Components.moveCamera)
-local renderGame = require(Components.renderGame)
-local renderCharacters = require(Components.renderCharacters)
+local moveCamera = require(NotReallyComponents.moveCamera)
+local renderGame = require(NotReallyComponents.renderGame)
+local renderCharacters = require(NotReallyComponents.renderCharacters)
 
 local Log = require(script.Parent.Log)
 
