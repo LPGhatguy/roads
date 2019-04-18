@@ -10,7 +10,6 @@ local RoactRodux = require(ReplicatedStorage.Modules.RoactRodux)
 
 local Reducer = require(Common.Reducer)
 local renderGame = require(NotReallyComponents.renderGame)
-local renderCharacters = require(NotReallyComponents.renderCharacters)
 
 local Game = require(Components.Game)
 
@@ -37,7 +36,6 @@ function ClientGameSession.new(initialGameState)
 		roactTree = roactTree,
 		components = {
 			renderGame(),
-			renderCharacters(),
 		},
 	}, ClientGameSession)
 end
