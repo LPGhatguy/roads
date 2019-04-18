@@ -20,7 +20,6 @@ local client
 client = ClientApi.connect({
 	gameSessionStarted = function(initialGameState)
 		gameSession = ClientGameSession.new(initialGameState)
-		gameSession:stepComponents()
 	end,
 	gameActions = function(actions)
 		if gameSession == nil then
@@ -29,7 +28,6 @@ client = ClientApi.connect({
 		end
 
 		gameSession:processActions(actions)
-		gameSession:stepComponents()
 	end,
 })
 

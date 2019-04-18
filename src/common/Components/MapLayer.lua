@@ -1,29 +1,21 @@
-local Workspace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Common = ReplicatedStorage.Common
+local Modules = ReplicatedStorage.Modules
+
+local Roact = require(Modules.Roact)
 
 local MapLayer = require(Common.MapLayer)
 local World = require(Common.World)
-local Models = require(Common.Models)
 
-local function createTile(name)
-	local model = Models.get(name):Clone()
-	local floor = model.PrimaryPart
+local MapTile = require(script.Parent.MapTile)
 
-	local box = Instance.new("SelectionBox")
-	box.Color3 = Color3.fromRGB(32, 32, 32)
-	box.SurfaceColor3 = Color3.fromRGB(255, 255, 255)
-	box.Adornee = floor
-	box.LineThickness = 0.03
-	box.Parent = floor
+local MapLayerComponent = Roact.Component:extend("MapLayerComponent")
 
-	return model
-end
+function MapLayerComponent:render()
+	local mapLayer = self.props.mapLayer
 
-local function renderMapLayer(mapLayer)
-	local rootInstance = Instance.new("Folder")
-	rootInstance.Name = "Map Layer"
+	local children = {}
 
 	for x = 1, mapLayer.width do
 		for y = 1, mapLayer.height do
@@ -37,7 +29,7 @@ local function renderMapLayer(mapLayer)
 				local west = MapLayer.getTile(mapLayer, x - 1, y)
 				local east = MapLayer.getTile(mapLayer, x + 1, y)
 
-				local instance
+				local tileName
 				local transform = CFrame.new(Vector3.new(worldPos.X, 0, worldPos.Y))
 
 				-- I wish I had ML-style pattern matching here
@@ -49,18 +41,18 @@ local function renderMapLayer(mapLayer)
 					+ (east and 1 or 0)
 
 				if numberAdjacent == 0 then
-					instance = createTile("Empty")
+					tileName = "Empty"
 				elseif numberAdjacent == 1 then
-					instance = createTile("Empty")
+					tileName = "Empty"
 				elseif numberAdjacent == 2 then
 					if (north and south) or (west and east) then
-						instance = createTile("Hall")
+						tileName = "Hall"
 
 						if west then
 							transform = transform * CFrame.Angles(0, math.pi / 2, 0)
 						end
 					else
-						instance = createTile("Corner")
+						tileName = "Corner"
 
 						if north and west then
 							-- we're done
@@ -75,7 +67,7 @@ local function renderMapLayer(mapLayer)
 						end
 					end
 				elseif numberAdjacent == 3 then
-					instance = createTile("Wall")
+					tileName = "Wall"
 
 					if not south then
 						transform = transform * CFrame.Angles(0, math.pi / 2, 0)
@@ -89,37 +81,23 @@ local function renderMapLayer(mapLayer)
 						error("unreachable")
 					end
 				elseif numberAdjacent == 4 then
-					instance = createTile("Empty")
+					tileName = "Empty"
 				else
 					error("unreachable")
 				end
 
-				assert(instance ~= nil)
+				assert(tileName ~= nil)
 				assert(transform ~= nil)
 
-				instance.Name = ("(%d, %d)"):format(x, y)
-				instance:SetPrimaryPartCFrame(transform)
-				instance.Parent = rootInstance
+				children[("(%d, %d)"):format(x, y)] = Roact.createElement(MapTile, {
+					tileName = tileName,
+					transform = transform,
+				})
 			end
 		end
 	end
 
-	return rootInstance
+	return Roact.createElement("Folder", nil, children)
 end
 
-local function renderGame()
-	local rootInstance = Instance.new("Model")
-	rootInstance.Name = "Map"
-	rootInstance.Parent = Workspace
-
-	local currentMapLayer
-
-	return function(state)
-		if currentMapLayer == nil then
-			currentMapLayer = renderMapLayer(state.mapLayers[1])
-			currentMapLayer.Parent = rootInstance
-		end
-	end
-end
-
-return renderGame
+return MapLayerComponent

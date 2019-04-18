@@ -7,6 +7,7 @@ local Roact = require(Modules.Roact)
 
 local Camera = require(script.Parent.Camera)
 local VisibleCharacters = require(script.Parent.VisibleCharacters)
+local CurrentMapLayer = require(script.Parent.CurrentMapLayer)
 
 local Game = Roact.Component:extend("Game")
 
@@ -18,6 +19,7 @@ function Game:render()
 			target = Workspace,
 		}, {
 			Characters = Roact.createElement(VisibleCharacters),
+			Map = Roact.createElement(CurrentMapLayer),
 		})
 	})
 end

@@ -1,7 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Common = ReplicatedStorage.Common
-local NotReallyComponents = Common.NotReallyComponents
 local Components = Common.Components
 
 local Roact = require(ReplicatedStorage.Modules.Roact)
@@ -9,7 +8,6 @@ local Rodux = require(ReplicatedStorage.Modules.Rodux)
 local RoactRodux = require(ReplicatedStorage.Modules.RoactRodux)
 
 local Reducer = require(Common.Reducer)
-local renderGame = require(NotReallyComponents.renderGame)
 
 local Game = require(Components.Game)
 
@@ -34,16 +32,7 @@ function ClientGameSession.new(initialGameState)
 	return setmetatable({
 		store = store,
 		roactTree = roactTree,
-		components = {
-			renderGame(),
-		},
 	}, ClientGameSession)
-end
-
-function ClientGameSession:stepComponents()
-	for _, component in ipairs(self.components) do
-		component(self.store:getState())
-	end
 end
 
 function ClientGameSession:processActions(actions)
