@@ -2,13 +2,17 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Common = ReplicatedStorage.Common
 local NotReallyComponents = Common.NotReallyComponents
+local Components = Common.Components
 
+local Roact = require(ReplicatedStorage.Modules.Roact)
 local Rodux = require(ReplicatedStorage.Modules.Rodux)
+local RoactRodux = require(ReplicatedStorage.Modules.RoactRodux)
 
 local Reducer = require(Common.Reducer)
-local moveCamera = require(NotReallyComponents.moveCamera)
 local renderGame = require(NotReallyComponents.renderGame)
 local renderCharacters = require(NotReallyComponents.renderCharacters)
+
+local Game = require(Components.Game)
 
 local Log = require(script.Parent.Log)
 
@@ -18,10 +22,20 @@ ClientGameSession.__index = ClientGameSession
 function ClientGameSession.new(initialGameState)
 	Log.info("Client game session starting")
 
+	local store = Rodux.Store.new(Reducer, initialGameState)
+
+	local element = Roact.createElement(RoactRodux.StoreProvider, {
+		store = store,
+	}, {
+		Game = Roact.createElement(Game),
+	})
+
+	local roactTree = Roact.mount(element, nil, "Game")
+
 	return setmetatable({
-		store = Rodux.Store.new(Reducer, initialGameState),
+		store = store,
+		roactTree = roactTree,
 		components = {
-			moveCamera(),
 			renderGame(),
 			renderCharacters(),
 		},
@@ -41,7 +55,8 @@ function ClientGameSession:processActions(actions)
 end
 
 function ClientGameSession:stop()
-	Log.info("Client game session ending")
+	-- TODO: Actually destruct the game session?
+	Log.info("Client game session ending...")
 end
 
 return ClientGameSession
