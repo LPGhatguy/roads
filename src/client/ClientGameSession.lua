@@ -12,13 +12,14 @@ local Action = require(Common.Action)
 local Reducer = require(Common.Reducer)
 
 local Game = require(Components.Game)
+local NetworkClient = require(Components.NetworkClient)
 
 local Log = require(script.Parent.Log)
 
 local ClientGameSession = {}
 ClientGameSession.__index = ClientGameSession
 
-function ClientGameSession.new(initialGameState)
+function ClientGameSession.new(networkClient, initialGameState)
 	Log.info("Client game session starting")
 
 	local store = Rodux.Store.new(Reducer, initialGameState)
@@ -26,7 +27,11 @@ function ClientGameSession.new(initialGameState)
 	local element = Roact.createElement(RoactRodux.StoreProvider, {
 		store = store,
 	}, {
-		Game = Roact.createElement(Game),
+		NetworkClient = Roact.createElement(NetworkClient.Provider, {
+			networkClient = networkClient,
+		}, {
+			Game = Roact.createElement(Game),
+		}),
 	})
 
 	local roactTree = Roact.mount(element, nil, "Game")
