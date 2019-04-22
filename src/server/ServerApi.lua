@@ -41,7 +41,7 @@ function ServerApi.create(handlers)
 			assert(typeof(player) == "Instance" and player:IsA("Player"))
 			assert(endpoint.arguments(...))
 
-			Log.trace("Receiving event %q from player %s", name, player.Name)
+			Log.trace("Receiving event {:?} from player {}", name, player.Name)
 
 			handler(player, ...)
 		end)
@@ -56,14 +56,14 @@ function ServerApi.create(handlers)
 			if player == ServerApi.AllPlayers then
 				assert(endpoint.arguments(...))
 
-				Log.trace("Firing event %q for all players", name)
+				Log.trace("Firing event {:?} for all players", name)
 
 				remote:FireAllClients(...)
 			else
 				assert(typeof(player) == "Instance" and player:IsA("Player"), "Missing player argument")
 				assert(endpoint.arguments(...))
 
-				Log.trace("Firing event %q for player %s", name, player.Name)
+				Log.trace("Firing event {:?} for player {}", name, player.Name)
 
 				remote:FireClient(player, ...)
 			end

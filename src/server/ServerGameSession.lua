@@ -17,7 +17,7 @@ function ServerGameSession.new(player)
 	assert(typeof(player) == "Instance")
 	assert(player:IsA("Player"))
 
-	Log.info(("Server game session for player %s starting"):format(player.Name))
+	Log.info("Server game session for player {} starting", player.Name)
 
 	return setmetatable({
 		store = Rodux.Store.new(Reducer),
@@ -44,7 +44,7 @@ function ServerGameSession:processInput(input)
 end
 
 function ServerGameSession:stop()
-	Log.info(("Server game session for player %s ending"):format(self.player.Name))
+	Log.info("Server game session for player {} ending", self.player.Name)
 end
 
 return ServerGameSession

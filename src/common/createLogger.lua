@@ -1,5 +1,7 @@
 local RunService = game:GetService("RunService")
 
+local display = require(script.Parent.display)
+
 local isServer = RunService:IsServer()
 local isClient = RunService:IsClient()
 
@@ -12,6 +14,26 @@ end
 
 local function indentWarning(message)
 	return message:gsub("\n", "\n" .. EXTRA_LINE_INDENT)
+end
+
+local function betterFormat(template, ...)
+	local values = {...}
+	local matchCount = 0
+
+	local result = template:gsub("{([^}]*)}", function(args)
+		matchCount = matchCount + 1
+		local value = values[matchCount]
+
+		if args == ":?" then
+			return display(value)
+		elseif args == "" then
+			return tostring(value)
+		else
+			error(("Invalid format string %q"):format(args))
+		end
+	end)
+
+	return result
 end
 
 local function createLogger(scope)
@@ -39,15 +61,15 @@ local function createLogger(scope)
 
 	return {
 		trace = function(template, ...)
-			local message = string.format(template, ...)
+			local message = betterFormat(template, ...)
 			print(tracePrefix .. indentNonWarning(message))
 		end,
 		info = function(template, ...)
-			local message = string.format(template, ...)
+			local message = betterFormat(template, ...)
 			print(infoPrefix .. indentNonWarning(message))
 		end,
 		warn = function(template, ...)
-			local message = string.format(template, ...)
+			local message = betterFormat(template, ...)
 			warn(warnPrefix .. indentWarning(message))
 		end,
 	}

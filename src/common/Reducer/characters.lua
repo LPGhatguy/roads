@@ -16,7 +16,7 @@ local function characters(state, action)
 		local character = state[action.characterId]
 
 		if character == nil then
-			Log.warn("Couldn't move character ID %d: it did not exist", action.characterId)
+			Log.warn("Couldn't move character ID {}: it did not exist", action.characterId)
 			return state
 		end
 

@@ -35,7 +35,7 @@ function ClientApi.connect(handlers)
 		local remote = remotes:WaitForChild("fromClient-" .. name)
 
 		self[name] = function(_, ...)
-			Log.trace(("Firing event %q"):format(name))
+			Log.trace("Firing event {:?}", name)
 
 			assert(endpoint.arguments(...))
 
@@ -53,7 +53,7 @@ function ClientApi.connect(handlers)
 		end
 
 		remote.OnClientEvent:Connect(function(...)
-			Log.trace(("Received event %q"):format(name))
+			Log.trace("Received event {:?}", name)
 
 			assert(endpoint.arguments(...))
 

@@ -15,7 +15,7 @@ local function playerMovement()
 			local targetTile = MapLayer.getTile(currentLayer, newX, newY)
 
 			if not targetTile then
-				Log.warn("Couldn't move to tile %d, %d", newX, newY)
+				Log.warn("Couldn't move to tile {}, {}", newX, newY)
 				return
 			end
 

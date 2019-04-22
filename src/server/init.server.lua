@@ -21,7 +21,7 @@ local server
 server = ServerApi.create({
 	startGameSession = function(player)
 		if gameSessionsByPlayer[player] ~= nil then
-			Log.warn("Player %s already had a game session.", player.Name)
+			Log.warn("Player {:?} already had a game session.", player.Name)
 			return
 		end
 
@@ -34,23 +34,23 @@ server = ServerApi.create({
 		local gameSession = gameSessionsByPlayer[player]
 
 		if gameSession == nil then
-			Log.warn("Player %s does not have an active game session.", player.Name)
+			Log.warn("Player {:?} does not have an active game session.", player.Name)
 			return
 		end
 
 		local actions = gameSession:processInput(input)
 
-		Log.trace("Sending %d actions to client", #actions)
+		Log.trace("Sending {} actions to client", #actions)
 		server:gameActions(player, actions)
 	end,
 })
 
 Players.PlayerAdded:Connect(function(player)
-	Log.info("Player added: %s", player.Name)
+	Log.info("Player added: {}", player.Name)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
-	Log.info("Player removing: %s", player.Name)
+	Log.info("Player removing: {}", player.Name)
 
 	gameSessionsByPlayer[player] = nil
 end)
