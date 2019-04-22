@@ -8,7 +8,6 @@ local Common = ReplicatedStorage.Common
 
 local ClientApi = require(script.ClientApi)
 local ClientGameSession = require(script.ClientGameSession)
-local startInput = require(script.startInput)
 
 local Models = require(Common.Models)
 
@@ -30,8 +29,6 @@ networkClient = ClientApi.connect({
 		gameSession:processActions(actions)
 	end,
 })
-
-local _ = startInput(networkClient)
 
 networkClient:startGameSession()
 
