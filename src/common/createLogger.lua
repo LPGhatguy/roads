@@ -2,6 +2,14 @@ local RunService = game:GetService("RunService")
 
 local display = require(script.Parent.display)
 
+local LogLevel = {
+	Trace = 3,
+	Info = 2,
+	Warn = 1,
+}
+
+local CURRENT_LOG_LEVEL = LogLevel.Warn
+
 local isServer = RunService:IsServer()
 local isClient = RunService:IsClient()
 
@@ -61,14 +69,26 @@ local function createLogger(scope)
 
 	return {
 		trace = function(template, ...)
+			if CURRENT_LOG_LEVEL < LogLevel.Trace then
+				return
+			end
+
 			local message = betterFormat(template, ...)
 			print(tracePrefix .. indentNonWarning(message))
 		end,
 		info = function(template, ...)
+			if CURRENT_LOG_LEVEL < LogLevel.Info then
+				return
+			end
+
 			local message = betterFormat(template, ...)
 			print(infoPrefix .. indentNonWarning(message))
 		end,
 		warn = function(template, ...)
+			if CURRENT_LOG_LEVEL < LogLevel.Warn then
+				return
+			end
+
 			local message = betterFormat(template, ...)
 			warn(warnPrefix .. indentWarning(message))
 		end,
