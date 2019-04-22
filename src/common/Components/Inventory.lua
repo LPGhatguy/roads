@@ -40,8 +40,14 @@ function Inventory:render()
 		end
 
 		if item.equipped then
-			label = label .. " 🛡️"
+			label = label .. " 🛡️" -- or 🗡️?
 		end
+
+		-- TODO: Add type column first
+		-- TODO: Add 'count' column, at least for fungible items
+		-- TODO: Interaction
+		-- TODO: Keyboard navigation
+		-- TODO: Show/hide menu with key
 
 		children[tostring(itemId)] = Roact.createElement("TextButton", {
 			LayoutOrder = index,
