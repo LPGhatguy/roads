@@ -1,11 +1,13 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local Modules = ReplicatedStorage.Modules
 local Common = ReplicatedStorage.Common
 local Systems = Common.Systems
 
-local Rodux = require(ReplicatedStorage.Modules.Rodux)
+local Rodux = require(Modules.Rodux)
 
 local Reducer = require(Common.Reducer)
+local Action = require(Common.Action)
 local playerMovement = require(Systems.playerMovement)
 
 local Log = require(script.Parent.Log)
@@ -35,8 +37,14 @@ function ServerGameSession:processInput(input)
 		local action = system(self.store:getState(), input)
 
 		if action ~= nil then
-			self.store:dispatch(action)
-			table.insert(actions, action)
+			local ok, message = Action.validate(action)
+
+			if ok then
+				self.store:dispatch(action)
+				table.insert(actions, action)
+			else
+				Log.warn("Invalid action:\n{:?}\n{}", action, message)
+			end
 		end
 	end
 
