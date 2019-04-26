@@ -44,8 +44,13 @@ function MapTile:didMount()
 	self:positionMapTile()
 end
 
-function MapTile:didUpdate()
-	-- TODO: Update instance if tileName changed
+function MapTile:didUpdate(oldProps)
+	if oldProps.tileName ~= self.props.tileName then
+		self.instance:Destroy()
+		self.instance = createTile(self.props.tileName)
+		self.instance.Parent = self.ref.current
+	end
+
 	self:positionMapTile()
 end
 
