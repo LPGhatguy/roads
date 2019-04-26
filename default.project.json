@@ -24,8 +24,8 @@
           "Value": 0
         },
         "TimeOfDay": "12:00:00",
-        "GeographicLatitude": "20",
-        "Brightness": 1.0,
+        "GeographicLatitude": 20,
+        "Brightness": 1.0
       },
       "Skybox": {
         "$path": "Skybox.rbxmx"
