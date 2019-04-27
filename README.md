@@ -3,7 +3,7 @@
 
 [Roblox Group](https://www.roblox.com/groups/4828125/Road-Not-Taken#!/about)
 
-Early work in progress technology demonstration for building a Roblox game entirely with Rojo. It's not a game yet.
+Early work in progress technology demonstration game entirely with Rojo. It's not really a game yet.
 
 This project intends to show off the latest and greatest in Rojo features. It currently requires the current `master` branch of both the CLI and Roblox Studio plugin.
 
@@ -14,12 +14,15 @@ This project intends to show off the latest and greatest in Rojo features. It cu
 ## Non-goals
 - Make a good game
 
+## Status
+Foundation for a game is here. Most of my time is spent working on the underlying technology for *Road Not Taken* as opposed to the game itself.
+
 ## Bugs found so far
 - Refs don't serialize correctly, which makes `Model.PrimaryPart` not work. ([LPGhatguy/rojo#142](https://github.com/LPGhatguy/rojo/issues/142))
 - Property type inference for `Content` values doesn't happen, and the error messages Rojo outputs when inference fails are bad.
 
 ## Design
-- NetHack clone
+- Hacklike game (in the vein of NetHack)
 - Server authoritative
 - Spectating
 - Declarative world rendering (Roact!)
