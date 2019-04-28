@@ -8,8 +8,8 @@ local Roact = require(Modules.Roact)
 local Models = require(Common.Models)
 local World = require(Common.World)
 
-local function createTile()
-	local model = Models.get("BaseTile"):Clone()
+local function createTile(tileName)
+	local model = Models.get(tileName):Clone()
 	local floor = model.PrimaryPart
 
 	local box = Instance.new("SelectionBox")
@@ -35,23 +35,66 @@ function MapTile:render()
 end
 
 function MapTile:didMount()
-	self.tile = createTile()
-	self.tile.Parent = self.ref.current
+	local occupancy = self.props.occupancy
+	local position = self.props.position
 
-	self:positionMapTile()
-end
+	local worldPos = World.tileToWorld(position)
+	local baseTransform = CFrame.new(Vector3.new(worldPos.X, 0, worldPos.Y))
 
-function MapTile:didUpdate(oldProps)
-	self:positionMapTile()
-end
+	if occupancy.self then
+		local tile = createTile("BaseTile")
+		tile.Parent = self.ref.current
 
-function MapTile:willUnmount()
-	self.tile:Destroy()
-end
+		tile:SetPrimaryPartCFrame(baseTransform)
+	else
+		if occupancy.east then
+			local wall = createTile("ExteriorWall")
+			wall:SetPrimaryPartCFrame(baseTransform)
+			wall.Parent = self.ref.current
+		end
 
-function MapTile:positionMapTile()
-	local worldPos = World.tileToWorld(self.props.position)
-	self.tile:SetPrimaryPartCFrame(CFrame.new(Vector3.new(worldPos.X, 0, worldPos.Y)))
+		if occupancy.west then
+			local wall = createTile("ExteriorWall")
+			wall:SetPrimaryPartCFrame(baseTransform * CFrame.Angles(0, math.pi, 0))
+			wall.Parent = self.ref.current
+		end
+
+		if occupancy.north then
+			local wall = createTile("ExteriorWall")
+			wall:SetPrimaryPartCFrame(baseTransform * CFrame.Angles(0, -math.pi / 2, 0))
+			wall.Parent = self.ref.current
+		end
+
+		if occupancy.south then
+			local wall = createTile("ExteriorWall")
+			wall:SetPrimaryPartCFrame(baseTransform * CFrame.Angles(0, math.pi / 2, 0))
+			wall.Parent = self.ref.current
+		end
+
+		if occupancy.northEast then
+			local post = createTile("ExteriorPost")
+			post:SetPrimaryPartCFrame(baseTransform)
+			post.Parent = self.ref.current
+		end
+
+		if occupancy.southEast then
+			local post = createTile("ExteriorPost")
+			post:SetPrimaryPartCFrame(baseTransform * CFrame.Angles(0, math.pi / 2, 0))
+			post.Parent = self.ref.current
+		end
+
+		if occupancy.southWest then
+			local post = createTile("ExteriorPost")
+			post:SetPrimaryPartCFrame(baseTransform * CFrame.Angles(0, math.pi, 0))
+			post.Parent = self.ref.current
+		end
+
+		if occupancy.northWest then
+			local post = createTile("ExteriorPost")
+			post:SetPrimaryPartCFrame(baseTransform * CFrame.Angles(0, -math.pi / 2, 0))
+			post.Parent = self.ref.current
+		end
+	end
 end
 
 return MapTile

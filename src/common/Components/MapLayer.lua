@@ -6,10 +6,8 @@ local Modules = ReplicatedStorage.Modules
 local Roact = require(Modules.Roact)
 
 local MapLayer = require(Common.MapLayer)
-local World = require(Common.World)
 
 local MapTile = require(script.Parent.MapTile)
-local MapTileWall = require(script.Parent.MapTileWall)
 
 local MapLayerComponent = Roact.Component:extend("MapLayerComponent")
 
@@ -22,39 +20,24 @@ function MapLayerComponent:render()
 		for y = -1, mapLayer.height + 1 do
 			local tile = MapLayer.getTile(mapLayer, x, y)
 
-			if tile then
-				children[("(%d, %d)"):format(x, y)] = Roact.createElement(MapTile, {
-					position = Vector2.new(x, y),
-				})
-			else
-				local north = MapLayer.getTile(mapLayer, x, y + 1)
-				local south = MapLayer.getTile(mapLayer, x, y - 1)
-				local west = MapLayer.getTile(mapLayer, x - 1, y)
-				local east = MapLayer.getTile(mapLayer, x + 1, y)
+			local occupancy = {
+				self = tile,
+			}
 
-				local northEast = not north and not east and MapLayer.getTile(mapLayer, x + 1, y + 1)
-				local southEast = not south and not east and MapLayer.getTile(mapLayer, x + 1, y - 1)
-				local southWest = not south and not west and MapLayer.getTile(mapLayer, x - 1, y - 1)
-				local northWest = not north and not west and MapLayer.getTile(mapLayer, x - 1, y + 1)
+			occupancy.north = MapLayer.getTile(mapLayer, x, y + 1)
+			occupancy.south = MapLayer.getTile(mapLayer, x, y - 1)
+			occupancy.west = MapLayer.getTile(mapLayer, x - 1, y)
+			occupancy.east = MapLayer.getTile(mapLayer, x + 1, y)
 
-				if north or south or west or east or northEast or southEast or southWest or northWest then
-					children[("(%d, %d)"):format(x, y)] = Roact.createElement(MapTileWall, {
-						position = Vector2.new(x, y),
-						walls = {
-							north = north,
-							south = south,
-							west = west,
-							east = east,
-						},
-						posts = {
-							northEast = northEast,
-							southEast = southEast,
-							southWest = southWest,
-							northWest = northWest,
-						},
-					})
-				end
-			end
+			occupancy.northEast = not occupancy.north and not occupancy.east and MapLayer.getTile(mapLayer, x + 1, y + 1)
+			occupancy.southEast = not occupancy.south and not occupancy.east and MapLayer.getTile(mapLayer, x + 1, y - 1)
+			occupancy.southWest = not occupancy.south and not occupancy.west and MapLayer.getTile(mapLayer, x - 1, y - 1)
+			occupancy.northWest = not occupancy.north and not occupancy.west and MapLayer.getTile(mapLayer, x - 1, y + 1)
+
+			children[("(%d, %d)"):format(x, y)] = Roact.createElement(MapTile, {
+				position = Vector2.new(x, y),
+				occupancy = occupancy,
+			})
 		end
 	end
 
