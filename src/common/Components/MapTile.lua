@@ -37,36 +37,11 @@ function MapTile:positionMapTile()
 	self.instance:SetPrimaryPartCFrame(self.props.transform)
 end
 
-function MapTile:getInitialColors()
-	self.originalColors = {}
-	for _, instance in ipairs(self.instance:GetDescendants()) do
-		if instance:IsA("BasePart") then
-			self.originalColors[instance] = instance.Color
-		end
-	end
-end
-
-function MapTile:updateLighting()
-	local lightValue = 0.5 + 0.5 * math.sin(tick())
-
-	for instance, originalColor in pairs(self.originalColors) do
-		local h, s, v = Color3.toHSV(originalColor)
-		v = v * lightValue
-
-		instance.Color = Color3.fromHSV(h, s, v)
-	end
-end
-
 function MapTile:didMount()
 	self.instance = createTile(self.props.tileName)
 	self.instance.Parent = self.ref.current
 
 	self:positionMapTile()
-	self:getInitialColors()
-
-	game:GetService("RunService").RenderStepped:Connect(function()
-		self:updateLighting()
-	end)
 end
 
 function MapTile:didUpdate(oldProps)
