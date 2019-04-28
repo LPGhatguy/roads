@@ -6,9 +6,10 @@ local Modules = ReplicatedStorage.Modules
 local Roact = require(Modules.Roact)
 
 local Models = require(Common.Models)
+local World = require(Common.World)
 
-local function createTile(name)
-	local model = Models.get(name):Clone()
+local function createTile()
+	local model = Models.get("BaseTile"):Clone()
 	local floor = model.PrimaryPart
 
 	local box = Instance.new("SelectionBox")
@@ -33,29 +34,24 @@ function MapTile:render()
 	})
 end
 
-function MapTile:positionMapTile()
-	self.instance:SetPrimaryPartCFrame(self.props.transform)
-end
-
 function MapTile:didMount()
-	self.instance = createTile(self.props.tileName)
-	self.instance.Parent = self.ref.current
+	self.tile = createTile()
+	self.tile.Parent = self.ref.current
 
 	self:positionMapTile()
 end
 
 function MapTile:didUpdate(oldProps)
-	if oldProps.tileName ~= self.props.tileName then
-		self.instance:Destroy()
-		self.instance = createTile(self.props.tileName)
-		self.instance.Parent = self.ref.current
-	end
-
 	self:positionMapTile()
 end
 
 function MapTile:willUnmount()
-	self.instance:Destroy()
+	self.tile:Destroy()
+end
+
+function MapTile:positionMapTile()
+	local worldPos = World.tileToWorld(self.props.position)
+	self.tile:SetPrimaryPartCFrame(CFrame.new(Vector3.new(worldPos.X, 0, worldPos.Y)))
 end
 
 return MapTile

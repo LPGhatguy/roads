@@ -22,13 +22,9 @@ function MapLayerComponent:render()
 		for y = -1, mapLayer.height + 1 do
 			local tile = MapLayer.getTile(mapLayer, x, y)
 
-			local worldPos = World.tileToWorld(Vector2.new(x, y))
-			local transform = CFrame.new(Vector3.new(worldPos.X, 0, worldPos.Y))
-
 			if tile then
 				children[("(%d, %d)"):format(x, y)] = Roact.createElement(MapTile, {
-					tileName = "Empty",
-					transform = transform,
+					position = Vector2.new(x, y),
 				})
 			else
 				local north = MapLayer.getTile(mapLayer, x, y + 1)

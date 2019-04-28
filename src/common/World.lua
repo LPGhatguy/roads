@@ -3,11 +3,11 @@ local Models = require(script.Parent.Models)
 local World = {}
 
 function World.getTileSize()
-	local empty = Models.get("Empty")
+	local empty = Models.get("BaseTile")
 	local primaryPart = empty.PrimaryPart
 
-	assert(primaryPart ~= nil, "Model 'Empty' did not have PrimaryPart")
-	assert(primaryPart.Size.X == primaryPart.Size.Z, "Model 'Empty' did not have square floor")
+	assert(primaryPart ~= nil, "Model 'BaseTile' did not have PrimaryPart")
+	assert(primaryPart.Size.X == primaryPart.Size.Z, "Model 'BaseTile' did not have square floor")
 
 	return primaryPart.Size.X
 end
