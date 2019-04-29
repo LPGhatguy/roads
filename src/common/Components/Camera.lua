@@ -41,7 +41,7 @@ Camera = RoactRodux.connect(
 
 		return {
 			transform = CFrame.new(
-				Vector3.new(worldPosition.X, 40, worldPosition.Y - 10),
+				Vector3.new(worldPosition.X, 45, worldPosition.Y - 10),
 				Vector3.new(worldPosition.X, 0, worldPosition.Y)
 			)
 		}

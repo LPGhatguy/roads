@@ -23,6 +23,14 @@ function MapLayer.TEMP_generate()
 		end
 	end
 
+	MapLayer.setTile(layer, 9, 5, true)
+
+	for x = 10, 14 do
+		for y = 1, 10 do
+			MapLayer.setTile(layer, x, y, true)
+		end
+	end
+
 	return layer
 end
 
