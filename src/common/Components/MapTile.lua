@@ -35,6 +35,8 @@ function MapTile:render()
 end
 
 function MapTile:didMount()
+	self.instances = {}
+
 	local occupancy = self.props.occupancy
 	local position = self.props.position
 
@@ -43,9 +45,8 @@ function MapTile:didMount()
 
 	if occupancy.self then
 		local tile = createTile("BaseTile")
-		tile.Parent = self.ref.current
-
 		tile:SetPrimaryPartCFrame(baseTransform)
+		tile.Parent = self.ref.current
 	else
 		if occupancy.east then
 			local wall = createTile("ExteriorWall")
@@ -94,6 +95,35 @@ function MapTile:didMount()
 			post:SetPrimaryPartCFrame(baseTransform * CFrame.Angles(0, -math.pi / 2, 0))
 			post.Parent = self.ref.current
 		end
+	end
+
+	self:calculateInitialColors()
+	self:updateLighting()
+end
+
+function MapTile:calculateInitialColors()
+	self.initialPartColors = {}
+	for _, instance in ipairs(self.ref.current:GetDescendants()) do
+		if instance:IsA("BasePart") then
+			self.initialPartColors[instance] = instance.Color
+		end
+	end
+end
+
+function MapTile:updateLighting()
+	for _, instance in ipairs(self.ref.current:GetDescendants()) do
+		if instance:IsA("BasePart") then
+			local baseColor = self.initialPartColors[instance]
+			local h, s, v = Color3.toHSV(baseColor)
+			v = v * self.props.lighting
+			instance.Color = Color3.fromHSV(h, s, v)
+		end
+	end
+end
+
+function MapTile:didUpdate(oldProps)
+	if self.props.lighting ~= oldProps.lighting then
+		self:updateLighting()
 	end
 end
 

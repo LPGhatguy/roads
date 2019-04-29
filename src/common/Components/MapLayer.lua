@@ -13,6 +13,11 @@ local MapLayerComponent = Roact.Component:extend("MapLayerComponent")
 
 function MapLayerComponent:render()
 	local mapLayer = self.props.mapLayer
+	local playerPosition = self.props.playerPosition
+
+	local heroPosXY = Vector2.new(playerPosition.X, playerPosition.Y)
+
+	-- TODO: Accept lights as props
 
 	local children = {}
 
@@ -34,10 +39,20 @@ function MapLayerComponent:render()
 			occupancy.southWest = not occupancy.south and not occupancy.west and MapLayer.getTile(mapLayer, x - 1, y - 1)
 			occupancy.northWest = not occupancy.north and not occupancy.west and MapLayer.getTile(mapLayer, x - 1, y + 1)
 
-			children[("(%d, %d)"):format(x, y)] = Roact.createElement(MapTile, {
-				position = Vector2.new(x, y),
-				occupancy = occupancy,
-			})
+			if occupancy.north or occupancy.south or occupancy.west or occupancy.east
+				or occupancy.northEast or occupancy.southEast or occupancy.southWest or occupancy.northWest
+			then
+				local tilePos = Vector2.new(x, y)
+				local distance = (heroPosXY - tilePos).magnitude
+
+				local lighting = 1 - math.clamp(distance, 0, 8) / 8
+
+				children[("(%d, %d)"):format(x, y)] = Roact.createElement(MapTile, {
+					position = Vector2.new(x, y),
+					occupancy = occupancy,
+					lighting = lighting,
+				})
+			end
 		end
 	end
 

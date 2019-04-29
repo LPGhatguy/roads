@@ -11,16 +11,22 @@ local CurrentMapLayer = Roact.Component:extend("CurrentMapLayer")
 
 function CurrentMapLayer:render()
 	return Roact.createElement("Folder", nil, {
-		["1"] = Roact.createElement(MapLayer, {
-			mapLayer = self.props.mapLayer
+		[tostring(self.props.currentLayerIndex)] = Roact.createElement(MapLayer, {
+			mapLayer = self.props.mapLayer,
+			playerPosition = self.props.playerPosition,
 		}),
 	})
 end
 
 CurrentMapLayer = RoactRodux.connect(
 	function(state)
+		local player = state.characters[state.playerCharacterId]
+		local currentLayerIndex = player.position.Z
+
 		return {
-			mapLayer = state.mapLayers[1],
+			mapLayer = state.mapLayers[currentLayerIndex],
+			currentLayerIndex = currentLayerIndex,
+			playerPosition = player.position,
 		}
 	end
 )(CurrentMapLayer)
