@@ -11,21 +11,18 @@
     "Lighting": {
       "$className": "Lighting",
       "$properties": {
-        "Ambient": [0, 0, 0],
+        "Ambient": [0.78, 0.78, 0.78],
         "OutdoorAmbient": [0, 0, 0],
         "Outlines": false,
         "GlobalShadows": true,
-        "Technology": {
-          "Type": "Enum",
-          "Value": 3
-        },
+        "Technology": "Voxel",
         "ShadowSoftness": {
           "Type": "Float32",
           "Value": 0
         },
         "TimeOfDay": "12:00:00",
         "GeographicLatitude": 20,
-        "Brightness": 1.0
+        "Brightness": 0.5
       },
       "Skybox": {
         "$path": "Skybox.rbxmx"
