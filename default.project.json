@@ -16,10 +16,7 @@
         "Outlines": false,
         "GlobalShadows": true,
         "Technology": "Voxel",
-        "ShadowSoftness": {
-          "Type": "Float32",
-          "Value": 0
-        },
+        "ShadowSoftness": 0,
         "TimeOfDay": "12:00:00",
         "GeographicLatitude": 20,
         "Brightness": 0.5
