@@ -39,13 +39,13 @@
           "$path": "modules/t/lib/t.lua"
         },
         "Roact": {
-          "$path": "modules/roact/lib"
+          "$path": "modules/roact/src"
         },
         "Rodux": {
-          "$path": "modules/rodux/lib"
+          "$path": "modules/rodux/src"
         },
         "RoactRodux": {
-          "$path": "modules/roact-rodux/lib"
+          "$path": "modules/roact-rodux/src"
         }
       }
     },
