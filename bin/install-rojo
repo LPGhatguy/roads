@@ -1,3 +1,0 @@
-#!/bin/sh
-
-cargo install --force --git https://github.com/LPGhatguy/rojo.git

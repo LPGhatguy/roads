@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo "Watching for changes and rebuilding Place.rbxlx"
-watchexec -c -i Place.rbxlx -- "echo Rebuilding... && rojo build -o Place.rbxlx && echo Done!"
