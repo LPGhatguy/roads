@@ -2,8 +2,9 @@
 	<Meta name="ExplicitAutoJoints">true</Meta>
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Model" referent="RBXEAD6B1CA45974F249D00F8CE0966A346">
+	<Item class="Model" referent="40">
 		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
 			<CoordinateFrame name="ModelInPrimary">
 				<X>0</X>
 				<Y>0</Y>
@@ -22,9 +23,10 @@
 			<Ref name="PrimaryPart">null</Ref>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>
-		<Item class="Part" referent="RBX7036AE40F6EB4D83A5918FC4BA3B66BB">
+		<Item class="Part" referent="41">
 			<Properties>
 				<bool name="Anchored">true</bool>
+				<BinaryString name="AttributesSerialize"></BinaryString>
 				<float name="BackParamA">-0.5</float>
 				<float name="BackParamB">0.5</float>
 				<token name="BackSurface">0</token>
@@ -50,7 +52,7 @@
 				<bool name="CanCollide">true</bool>
 				<bool name="CastShadow">true</bool>
 				<int name="CollisionGroupId">0</int>
-				<Color3uint8 name="Color3uint8">4278255615</Color3uint8>
+				<Color3uint8 name="Color3uint8">4294901760</Color3uint8>
 				<PhysicalProperties name="CustomPhysicalProperties">
 					<CustomPhysics>false</CustomPhysics>
 				</PhysicalProperties>
@@ -97,9 +99,10 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBX759E7B0866A14D5CACD7652852D4F099">
+		<Item class="Part" referent="42">
 			<Properties>
 				<bool name="Anchored">true</bool>
+				<BinaryString name="AttributesSerialize"></BinaryString>
 				<float name="BackParamA">-0.5</float>
 				<float name="BackParamB">0.5</float>
 				<token name="BackSurface">0</token>
