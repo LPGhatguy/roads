@@ -1,5 +1,3 @@
-local RunService = game:GetService("RunService")
-
 local display = require(script.Parent.display)
 
 local LogLevel = {
@@ -9,9 +7,6 @@ local LogLevel = {
 }
 
 local CURRENT_LOG_LEVEL = LogLevel.Warn
-
-local isServer = RunService:IsServer()
-local isClient = RunService:IsClient()
 
 local NON_WARN_INDENT = "               " -- Width of warning timestamp
 local EXTRA_LINE_INDENT = "                 " -- Width of line prefix
@@ -45,27 +40,9 @@ local function betterFormat(template, ...)
 end
 
 local function createLogger(scope)
-	local label
-
-	if scope == "client" then
-		label = "CLIENT"
-	elseif scope == "server" then
-		label = "SERVER"
-	elseif scope == "common" then
-		if not isServer then
-			label = "CLIENT"
-		elseif not isClient then
-			label = "SERVER"
-		else
-			label = "PLYSOL"
-		end
-	else
-		error("Invalid createLogger scope")
-	end
-
-	local tracePrefix = ("%s[%s] [trace] "):format(NON_WARN_INDENT, label)
-	local infoPrefix =  ("%s[%s] [info ] "):format(NON_WARN_INDENT, label)
-	local warnPrefix =    ("[%s] [warn ] "):format(label)
+	local tracePrefix = ("%s[trace] "):format(NON_WARN_INDENT)
+	local infoPrefix =  ("%s[info ] "):format(NON_WARN_INDENT)
+	local warnPrefix =     "[warn ] "
 
 	return {
 		trace = function(template, ...)
