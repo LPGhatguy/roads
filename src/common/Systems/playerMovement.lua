@@ -15,8 +15,20 @@ local function playerMovement()
 			local targetTile = MapLayer.getTile(currentLayer, newX, newY)
 
 			if not targetTile then
-				Log.warn("Couldn't move to tile {}, {}", newX, newY)
-				return
+				Log.warn("Couldn't move to tile {}, {}: it's a wall", newX, newY)
+				return nil
+			end
+
+			local newPosition = Vector3.new(newX, newY, layerIndex)
+
+			-- Check for collisions with other characters
+			for _, character in pairs(state.characters) do
+				if character.position == newPosition then
+					Log.warn("Couldn't move to tile {}, {}: someone is already there!", newX, newY)
+					return nil
+				end
+
+				-- TODO: If character is friendly towards player, swap positions?
 			end
 
 			-- TODO: check for other characters here, attack instead?
@@ -24,7 +36,7 @@ local function playerMovement()
 			return {
 				type = "moveCharacter",
 				characterId = state.playerCharacterId,
-				newPosition = Vector3.new(newX, newY, layerIndex),
+				newPosition = newPosition,
 			}
 		end
 	end

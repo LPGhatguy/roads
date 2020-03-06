@@ -2,13 +2,12 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Modules = ReplicatedStorage.Modules
 local Common = ReplicatedStorage.Common
-local Systems = Common.Systems
 
 local Rodux = require(Modules.Rodux)
 
 local Reducer = require(Common.Reducer)
 local Action = require(Common.Action)
-local playerMovement = require(Systems.playerMovement)
+local Systems = require(Common.Systems)
 
 local Log = require(script.Parent.Log)
 
@@ -24,9 +23,7 @@ function ServerGameSession.new(player)
 	return setmetatable({
 		store = Rodux.Store.new(Reducer),
 		player = player,
-		systems = {
-			playerMovement(),
-		},
+		systems = Systems,
 	}, ServerGameSession)
 end
 

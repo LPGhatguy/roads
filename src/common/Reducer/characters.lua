@@ -7,7 +7,14 @@ local function characters(state, action)
 	if state == nil then
 		state = {
 			{
+				tags = {},
 				position = Vector3.new(1, 1, 1),
+			},
+			{
+				tags = {
+					["placeholder-ai"] = true,
+				},
+				position = Vector3.new(2, 2, 1),
 			},
 		}
 	end
