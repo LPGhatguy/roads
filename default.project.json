@@ -36,7 +36,7 @@
       "Modules": {
         "$className": "Folder",
         "t": {
-          "$path": "modules/t/lib/t.lua"
+          "$path": "modules/t/lib/"
         },
         "Roact": {
           "$path": "modules/roact/src"
